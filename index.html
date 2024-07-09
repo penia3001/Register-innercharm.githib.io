@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol - InnerCharm</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('https://i.hizliresim.com/7k5dkyb.JPG');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .overlay {
+            background: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 450px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header img {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2rem;
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff7e5f;
+        }
+
+        .button-group {
+            margin-top: 2rem;
+        }
+
+        .button-group button {
+            background-color: #ff7e5f;
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .button-group button:hover {
+            background-color: #feb47b;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .login-link a {
+            color: #ff7e5f;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-link a:hover {
+            color: #feb47b;
+        }
+
+        .alert {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay">
+        <div class="container">
+            <div class="header">
+                <img src="https://i.hizliresim.com/7k5dkyb.JPG" alt="InnerCharm Logo">
+                <h1>Kayıt Ol</h1>
+            </div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="fullname">Ad Soyad</label>
+                    <input type="text" id="fullname" name="fullname" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Adresi</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Telefon Numarası</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Şifre</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmpassword">Şifreyi Onayla</label>
+                    <input type="password" id="confirmpassword" name="confirmpassword" required>
+                </div>
+                <div class="button-group">
+                    <button type="submit">Kayıt Ol</button>
+                </div>
+                <div id="alertMessage" class="alert" style="display: none;"></div>
+            </form>
+            <div class="login-link">
+                <p>Hesabınız var mı? <a href="login.html">Giriş Yap</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var fullname = document.getElementById('fullname').value;
+            var email = document.getElementById('email').value;
+            var phone = document.getElementById('phone').value;
+            var password = document.getElementById('password').value;
+            var confirmpassword = document.getElementById('confirmpassword').value;
+            var alertMessage = document.getElementById('alertMessage');
+
+            // Şifre uzunluğu ve eşleşme kontrolü
+            if (password.length < 8 || !/[A-Z]/.test(password) || !/[a-z]/.test(password) || !/[0-9]/.test(password) || !/[!@#$%^&*]/.test(password)) {
+                alertMessage.textContent = 'Şifre en az 8 karakter, büyük harf, küçük harf, sayı ve özel karakter içermelidir.';
+                alertMessage.className = 'alert alert-danger';
+                alertMessage.style.display = 'block';
+            } else if (password !== confirmpassword) {
+                alertMessage.textContent = 'Şifreler eşleşmiyor.';
+                alertMessage.className = 'alert alert-danger';
+                alertMessage.style.display = 'block';
+            } else {
+                alertMessage.textContent = 'Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz...';
+                alertMessage.className = 'alert alert-success';
+                alertMessage.style.display = 'block';
+                setTimeout(function () {
+                    window.location.href = 'login.html';
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+
+</html>
